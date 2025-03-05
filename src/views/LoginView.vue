@@ -18,17 +18,27 @@ export default {
       // Simulate API call
       setTimeout(() => {
         // Example validation - would be handled by your actual auth system
-        if (this.email === 'user@example.com' && this.password === 'password') {
+        if (this.email === 'user@ex.com' && this.password === 'pass') {
           // Success - redirect or store auth token
           console.log('Login successful');
-          this.$router.push('/dashboard');
+          this.$router.push('/survey');
         } else {
-          // Failed login
-          this.errorMessage = 'Invalid email or password';
+          if (this.email === 'admin@ex.com' && this.password === 'pass') {
+            // Success - redirect or store auth token
+            console.log('Login successful');
+            this.$router.push('/dashboard');
+          } else {
+            // Failed login
+            this.errorMessage = 'Invalid email or password';
+          }
         }
         this.isLoading = false;
       }, 1000);
-    }
+    },
+
+    goToAbout() {
+      this.$router.push('/about')
+    },
   }
 }
 </script>
@@ -41,16 +51,7 @@ export default {
           <div class="box">
             <h1 class="title has-text-centered">Login</h1>
 
-            <!-- Logo -->
-            <div class="has-text-centered mb-5">
-              <figure class="image is-96x96 is-inline-block">
-                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Logo" class="is-rounded">
-              </figure>
-            </div>
-
-            <!-- Login Form -->
             <form @submit.prevent="handleLogin">
-              <!-- Email Field -->
               <div class="field">
                 <label class="label">Email</label>
                 <div class="control has-icons-left">
@@ -102,6 +103,18 @@ export default {
                 {{ errorMessage }}
               </div>
             </form>
+
+            <!-- Forgot Password & Signup Links -->
+            <div class="has-text-centered mt-5">
+              <p>
+                <a href="#">Forgot your password?</a>
+              </p>
+              <p class="mt-3">
+                Don't have an account? <a href="#">Sign up</a>
+              </p>
+                <h2>About</h2>
+                <button @click="goToAbout">Go to About</button>
+            </div>
 
           </div>
         </div>

@@ -1,18 +1,17 @@
 <template>
-  <div id="app">
-    <LoginView />
-  </div>
+  <p>
+    <strong>Current route path:</strong> {{ $route.fullPath }}
+  </p>
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <script>
-import LoginView from './components/LoginView.vue'
 
 export default {
-  name: 'App',
-  components: {
-    LoginView
-  }
-}
+  name: "App",
+};
 </script>
 
 <style>
