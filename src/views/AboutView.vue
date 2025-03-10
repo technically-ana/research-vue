@@ -13,26 +13,14 @@
                 </span>
               </p>
 
-              <p>Welcome to our application! This web app was created on:</p>
+              <p>This application is for educational purpose.</p>
 
               <p class="has-text-centered is-size-4 has-text-weight-bold my-5">
                 {{ creationDate }}
               </p>
 
-              <div class="block">
-                <p>This application was built with:</p>
-                <ul>
-                  <li>Vue.js - Progressive JavaScript Framework</li>
-                  <li>Bulma CSS - Modern CSS framework</li>
-                  <li>Font Awesome - Icon library</li>
-                </ul>
-              </div>
-
               <div class="has-text-centered mt-5">
-                <button @click="goBack" class="button is-info">
-                  <span class="icon">
-                    <i class="fas fa-arrow-left"></i>
-                  </span>
+                <button @click="goBack" class="btn">
                   <span>Back</span>
                 </button>
               </div>

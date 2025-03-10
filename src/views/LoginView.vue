@@ -18,12 +18,12 @@ export default {
       // Simulate API call
       setTimeout(() => {
         // Example validation - would be handled by your actual auth system
-        if (this.email === 'user@ex.com' && this.password === 'pass') {
+        if (this.email === 'u@e.com' && this.password === 'p') {
           // Success - redirect or store auth token
           console.log('Login successful');
           this.$router.push('/survey');
         } else {
-          if (this.email === 'admin@ex.com' && this.password === 'pass') {
+          if (this.email === 'a@e.com' && this.password === 'p') {
             // Success - redirect or store auth token
             console.log('Login successful');
             this.$router.push('/dashboard');
@@ -87,9 +87,9 @@ export default {
 
               <!-- Submit Button -->
               <div class="field">
-                <div class="control">
+                <div class="control has-text-centered mt-5 btn-container">
                   <button
-                      class="button is-primary is-fullwidth"
+                      class="btn btn-large"
                       :class="{'is-loading': isLoading}"
                       type="submit"
                   >
@@ -105,15 +105,8 @@ export default {
             </form>
 
             <!-- Forgot Password & Signup Links -->
-            <div class="has-text-centered mt-5">
-              <p>
-                <a href="#">Forgot your password?</a>
-              </p>
-              <p class="mt-3">
-                Don't have an account? <a href="#">Sign up</a>
-              </p>
-                <h2>About</h2>
-                <button @click="goToAbout">Go to About</button>
+            <div class="has-text-centered mt-5 btn-container">
+                <button @click="goToAbout" class="btn">About</button>
             </div>
 
           </div>
@@ -124,9 +117,6 @@ export default {
 </template>
 
 
-<style scoped>
-.hero-body {
-  align-items: center;
-  justify-content: center;
-}
+<style>
+
 </style>
