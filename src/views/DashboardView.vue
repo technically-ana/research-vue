@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="has-text-centered mt-5">
-    <button @click="goBack" class="button is-info">
+    <button @click="goBack" class="btn">
                   <span class="icon">
                     <i class="fas fa-arrow-left"></i>
                   </span>
