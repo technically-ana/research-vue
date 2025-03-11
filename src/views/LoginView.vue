@@ -104,7 +104,6 @@ export default {
               </div>
             </form>
 
-            <!-- Forgot Password & Signup Links -->
             <div class="has-text-centered mt-5 btn-container">
                 <button @click="goToAbout" class="btn">About</button>
             </div>
