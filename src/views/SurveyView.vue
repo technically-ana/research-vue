@@ -11,14 +11,30 @@
           <div v-for="opt in question.options"
                :key="opt">
             <label :for="opt" style="color:black">
-            <input type="radio" :name="question.id" v-model="responses[question.id]" v-on:change="rememberResponse(question.id, opt)" :value="opt">
+              <input type="radio"
+                   :name="question.id"
+                   v-model="responses[question.id]"
+                   v-on:change="rememberResponseSingleChoice(question.id, opt)"
+                   :value="opt">
               {{ opt }}
             </label>
           </div>
-
         </div>
         <div v-else-if="question.type === 'multiChoice'">
+          <div v-for="ch in question.options"
+               :key="ch">
+            <div>
 
+              <label :for="ch" style="color:black">
+                <input type="checkbox"
+                       :id="ch"
+                       :name="responses[question.id]"
+                       :value="ch"
+                       v-on:click="rememberResponseMultiChoice(question.id, ch)">
+                {{ch}}
+              </label>
+            </div>
+          </div>
         </div>
         <div v-else>
 
@@ -97,9 +113,16 @@ export default {
           id: 'q3',
           text: 'question 3',
           type: 'text'
+        },
+        {
+          id: 'q5',
+          text: 'question 5',
+          type: 'multiChoice',
+          options: ['N', 'O', 'Something difficult', 'Something new', 'Is that empty?']
         }
       ],
-      responses: {}
+      responses: {},
+
     }
   },
   methods: {
@@ -114,8 +137,30 @@ export default {
     goBack() {
       this.$router.push('/');
     },
-    rememberResponse(q, r) {
+    rememberResponseSingleChoice(q, r) {
       this.responses[q] = r
+    },
+    rememberResponseMultiChoice(q, r) {
+      // console.log('q and r: ' + q + " " + r)
+      // console.log('l: ' + l)
+      // console.log('this.responses[q]: ' + this.responses[q])
+      if(this.responses[q] != null) {
+        if (this.responses[q].includes(r)) {
+          const index = this.responses[q].indexOf(r);
+          if (index > -1) {
+            this.responses[q].splice(index, 1);
+          }
+        }
+        else {
+
+          this.responses[q].push(r)
+        }
+      } else {
+        this.responses[q] = [];
+        this.responses[q].push(r);
+        console.log(typeof (this.responses[q]));
+      }
+
     }
   }
 }
