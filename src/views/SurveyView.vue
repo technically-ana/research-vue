@@ -4,10 +4,10 @@
       <div class="columns is-centered">
         <div class="column is-6">
           <div class="box">
-            <h1 class="survey-title">User Survey</h1>
+            <h1>User Survey</h1>
             <div style="color:red">Remove that!</div>
             <div style="color:black"> {{ responses }}</div>
-            <form @submit.prevent="submitSurvey" class="survey-form">
+            <form @submit.prevent="submitSurvey">
               <div v-for="question in questions"
                    :key="question"
                    class="question-container">
