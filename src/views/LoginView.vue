@@ -19,17 +19,19 @@ export default {
       setTimeout(() => {
         // Example validation - would be handled by your actual auth system
         if (this.email === 'u@e.com' && this.password === 'p') {
-          // Success - redirect or store auth token
           console.log('Login successful');
           this.$router.push('/survey');
         } else {
           if (this.email === 'a@e.com' && this.password === 'p') {
-            // Success - redirect or store auth token
             console.log('Login successful');
             this.$router.push('/dashboard');
           } else {
-            // Failed login
-            this.errorMessage = 'Invalid email or password';
+            if (this.email === 'uu@e.com' && this.password === 'p') {
+              console.log('Login successful');
+              this.$router.push('/finished');
+            } else {
+              this.errorMessage = 'Invalid email or password';
+            }
           }
         }
         this.isLoading = false;
