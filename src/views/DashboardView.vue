@@ -1,52 +1,52 @@
 <template>
-  <div class="dashboard-container">
-    <div class="summary-section">
-      <div class="summary-title">Column Averages</div>
-      <div class="summary-grid">
-        <div
-            v-for="(avg, index) in columnAverages"
-            :key="index"
-            class="summary-cell"
-        >
-          <span class="summary-label">Column {{ index + 1 }}</span>
-          <span class="summary-value">{{ avg.toFixed(2) }}</span>
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-6">
+          <div class="box">
+            <h2>Users</h2>
+            <form>
+              <div v-for="user in users"
+                   :key="user"
+                   class="question-container">
+                <h4>{{ user.name }}: <span v-if="statuses.find(st => st.userId === user.userId && st.status === 'finished') !== undefined" style="color:darkgreen"> Survey completed </span>
+                  <span v-else-if="statuses.find(st => st.userId === user.userId && st.status === 'not_finished') !== undefined" style="color:maroon"> Survey isn't finished </span>
+                  <span style="color:grey" v-else > Undefined</span>
+                </h4>
+
+              </div>
+            </form>
+          </div>
+
+          <div v-for="user in users"
+               :key="user"
+               class="box">
+            <h4>{{ user.name }}: Answers</h4>
+            <form>
+              <div v-for="q in questions "
+                   :key="q"
+                   class="question-container">
+                <p> {{q.text}}: <span v-if="responses.find(res => 
+                res.userId === user.userId && 
+                res.answers.find(ans => 
+                ans.questionId === q.id) !== undefined)">{{ 
+                    responses.find(res => res.userId === user.userId)
+                        .answers.find(ans => ans.questionId === q.id).answer.answer_value
+
+                  }}</span>
+                  <span v-else>N/A</span>
+
+                  </p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="matrix-section">
-      <div class="matrix-title">Data Matrix</div>
-      <div class="matrix-grid">
-        <div
-            v-for="(row, rowIndex) in matrix"
-            :key="rowIndex"
-            class="matrix-row"
-        >
-          <input
-              v-for="(cell, colIndex) in row"
-              :key="colIndex"
-              type="number"
-              v-model.number="matrix[rowIndex][colIndex]"
-              @input="calculateColumnAverages"
-              class="matrix-cell"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="matrix-summary">
-      <div class="total-summary">
-        <span>Total Sum: {{ totalSum }}</span>
-        <span>Total Average: {{ totalAverage.toFixed(2) }}</span>
-      </div>
-    </div>
-  </div>
-  <div class="has-text-centered mt-5">
+  </section>
+  <div class="has-text-centered mt-5 btn-container">
     <button @click="goBack" class="btn">
-                  <span class="icon">
-                    <i class="fas fa-arrow-left"></i>
-                  </span>
-      <span>Back</span>
+      <span>Exit</span>
     </button>
   </div>
 </template>
@@ -56,133 +56,174 @@ export default {
   name: 'DashboardView',
   data() {
     return {
-      matrix: [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0]
+      statuses: [
+        {
+          userId: 'u1',
+          status: 'finished'
+        },
+        {
+          userId: 'u2',
+          status: 'finished'
+        },
+        {
+          userId: 'u3',
+          status: 'not_finished'
+        },
+        {
+          userId: 'u4',
+          status: 'finished'
+        }
       ],
-      columnAverages: [0, 0, 0]
-    }
-  },
-  computed: {
-    totalSum() {
-      return this.matrix.flat().reduce((sum, value) => sum + value, 0);
-    },
-    totalAverage() {
-      const flatMatrix = this.matrix.flat();
-      return flatMatrix.reduce((sum, value) => sum + value, 0) / flatMatrix.length;
+      users: [
+        {
+          userId: 'u1',
+          name: 'User WithSurname1'
+        },
+        {
+          userId: 'u2',
+          name: 'User WithSurname2'
+        },
+        {
+          userId: 'u3',
+          name: 'User WithSurname3'
+        },
+        {
+          userId: 'u4',
+          name: 'User WithSurname4'
+        },
+
+      ],
+      questions: [
+        {
+          id: 'q1',
+          text: 'question 1',
+          type: 'singleChoice',
+          options: ['A', 'B', 'C', 'D']
+        },
+        {
+          id: 'q2',
+          text: 'question 2',
+          type: 'multiChoice',
+          options: ['E', 'F', 'G', 'H', 'I']
+        },
+        {
+          id: 'q4',
+          text: 'question 4',
+          type: 'singleChoice',
+          options: ['J', 'L', 'M', 'K']
+        },
+        {
+          id: 'q3',
+          text: 'question 3',
+          type: 'text'
+        },
+        {
+          id: 'q5',
+          text: 'question 5',
+          type: 'multiChoice',
+          options: ['N', 'O', 'Something difficult', 'Something new', 'Is that empty?']
+        },
+        {
+          id: 'q6',
+          text: 'question 6',
+          type: 'text'
+        }
+      ],
+      responses: [
+        {
+          userId: "u1",
+          answers: [
+            {
+              questionId: 'q1',
+              answer: { answer_value: 'A'}
+            },
+            {
+              questionId: 'q2',
+              answer:  { answer_value:['H', 'I'] }
+            },
+            {
+              questionId: 'q4',
+              answer:  { answer_value:'L' }
+            },
+            {
+              questionId: 'q3',
+              answer:  { answer_value:"texttextu1" }
+            },
+            {
+              questionId: 'q5',
+              answer:  { answer_value:['N', 'O'] }
+            },
+            {
+              questionId: 'q6',
+              answer:  { answer_value:"texttext!u1" }
+            },
+          ]
+        },
+        {
+          userId: "u2",
+          answers: [
+            {
+              questionId: 'q1',
+              answer:  { answer_value:'B' }
+            },
+            {
+              questionId: 'q2',
+              answer:  { answer_value:['E', 'F', 'G'] }
+            },
+            {
+              questionId: 'q4',
+              answer:  { answer_value:'M' }
+            },
+            {
+              questionId: 'q3',
+              answer:  { answer_value:"texttextu2" }
+            },
+            {
+              questionId: 'q5',
+              answer:  { answer_value:['N', 'O', 'Something new'] }
+            },
+            {
+              questionId: 'q6',
+              answer:  { answer_value:"texttext!u2" }
+            },
+          ]
+        },
+        {
+          userId: "u4",
+          answers: [
+            {
+              questionId: 'q1',
+              answer:  { answer_value:'A' }
+            },
+            {
+              questionId: 'q2',
+              answer:  { answer_value:['E', 'G', 'H', 'I'] }
+            },
+            {
+              questionId: 'q4',
+              answer:  { answer_value:'K' }
+            },
+            {
+              questionId: 'q3',
+              answer:  { answer_value:"texttextu4" }
+            },
+            {
+              questionId: 'q5',
+              answer:  { answer_value:['Something difficult', 'Is that empty?'] }
+            },
+            {
+              questionId: 'q6',
+              answer:  { answer_value:"texttext!u4" }
+            },
+          ]
+        }
+      ]
     }
   },
   methods: {
-    calculateColumnAverages() {
-      this.columnAverages = this.matrix[0].map((_, colIndex) => {
-        const columnValues = this.matrix.map(row => row[colIndex]);
-        return columnValues.reduce((sum, value) => sum + value, 0) / columnValues.length;
-      });
-    },
-    randomizeMatrix() {
-      this.matrix = this.matrix.map(row =>
-          row.map(() => Math.floor(Math.random() * 100))
-      );
-      this.calculateColumnAverages();
-    },
     goBack() {
       this.$router.push('/');
-    }
+    },
   },
-  mounted() {
-    // Optional: Initialize with some random data
-    this.randomizeMatrix();
-  }
 }
 </script>
-
-<style scoped>
-.dashboard-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.summary-section {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-.summary-title {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.summary-cell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffffff;
-  border-radius: 4px;
-  padding: 10px;
-}
-
-.summary-label {
-  font-size: 0.8em;
-  color: #666;
-}
-
-.summary-value {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
-.matrix-section {
-  margin-bottom: 20px;
-}
-
-.matrix-title {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.matrix-grid {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.matrix-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.matrix-cell {
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.matrix-summary {
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  padding: 15px;
-  display: flex;
-  justify-content: space-around;
-}
-
-.total-summary {
-  display: flex;
-  gap: 20px;
-}
-</style>
