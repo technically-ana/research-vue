@@ -3,7 +3,7 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-6">
-          <div class="box">
+          <div>
             <h1>User Survey</h1>
             <div style="color:red">Remove that!</div>
             <div style="color:black"> {{ responses }}</div>

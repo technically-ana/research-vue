@@ -3,7 +3,7 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-6">
-          <div class="box">
+          <div>
             <h1 class="title has-text-centered">About Our App</h1>
 
             <div class="content">

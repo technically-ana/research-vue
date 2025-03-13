@@ -50,7 +50,7 @@ export default {
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-4">
-          <div class="box">
+          <div>
             <h1 class="title has-text-centered">Login</h1>
 
             <form @submit.prevent="handleLogin">

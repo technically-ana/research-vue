@@ -3,26 +3,24 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-6">
-          <div class="box">
-            <h2>Users</h2>
-            <form>
-              <div v-for="user in users"
-                   :key="user"
-                   class="question-container">
-                <h4>{{ user.name }}: <span v-if="statuses.find(st => st.userId === user.userId && st.status === 'finished') !== undefined" style="color:darkgreen"> Survey completed </span>
-                  <span v-else-if="statuses.find(st => st.userId === user.userId && st.status === 'not_finished') !== undefined" style="color:maroon"> Survey isn't finished </span>
-                  <span style="color:grey" v-else > Undefined</span>
-                </h4>
+          <div class="padded-bot">
+            <div class="padded with-outline">
+              <h2>Users</h2>
+                <div v-for="user in users"
+                     :key="user"
+                     class="question-container">
+                  <h4>{{ user.name }}: <span v-if="statuses.find(st => st.userId === user.userId && st.status === 'finished') !== undefined" style="color:darkgreen"> ✔ </span>
+                    <span v-else-if="statuses.find(st => st.userId === user.userId && st.status === 'not_finished') !== undefined" style="color:maroon"> ✘ </span>
+                    <span style="color:grey" v-else > Undefined</span>
+                  </h4>
 
-              </div>
-            </form>
+                </div>
+            </div>
           </div>
 
           <div v-for="user in users"
-               :key="user"
-               class="box">
+               :key="user">
             <h4>{{ user.name }}: Answers</h4>
-            <form>
               <div v-for="q in questions "
                    :key="q"
                    class="question-container">
@@ -38,7 +36,7 @@
 
                   </p>
               </div>
-            </form>
+            <hr>
           </div>
         </div>
       </div>
@@ -227,3 +225,18 @@ export default {
   },
 }
 </script>
+
+<style>
+.with-outline {
+  outline: 2px solid whitesmoke;
+}
+
+.padded {
+  padding: 24px;
+}
+
+.padded-bot {
+  padding-bottom: 24px;
+}
+
+</style>
