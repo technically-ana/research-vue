@@ -15,10 +15,14 @@ export default {
 </script>
 
 <style>
-@import url(http://fonts.googleapis.com/css?family=Cutive%20Mono:400);
+
+html *
+{
+  font-family: "Courier 10 Pitch", sans-serif !important;
+}
 p {
   font-size: 14px;
-  line-height: 22.4px;
+  line-height: 22px;
   color: #6c7279;
 }
 h1 {
