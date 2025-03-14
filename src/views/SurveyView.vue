@@ -41,6 +41,11 @@
                     </div>
                   </div>
                 </div>
+                <div v-else-if="question.type === 'textNumber'">
+                  <input v-model="responses[question.id]"
+                         placeholder="Your answer"
+                  @keydown="isNumber($event)"/>
+                </div>
                 <div v-else>
                   <input v-model="responses[question.id]" placeholder="Your answer"/>
                 </div>
@@ -91,6 +96,11 @@ export default {
           type: 'text'
         },
         {
+          id: 'q7',
+          text: 'question 7',
+          type: 'textNumber'
+        },
+        {
           id: 'q5',
           text: 'question 5',
           type: 'multiChoice',
@@ -114,6 +124,15 @@ export default {
       // Here you would typically send the responses to Firebase
       // For example:
       // this.sendToFirebase(this.responses);
+    },
+    isNumber: function(evt) {
+      evt = (evt) ? evt : window.onkeydown();
+      let charCode = (evt.which) ? evt.which : evt.keyCode;
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
     },
     goBack() {
       this.$router.push('/');
