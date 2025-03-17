@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection } from 'firebase/firestore'
+import { getDatabase, child, ref, get }  from 'firebase/database'
+import { useDatabaseList} from 'vuefire'
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -7,9 +8,16 @@ const firebaseConfig = {
 
 export const firebaseApp = initializeApp(firebaseConfig)
 
-// used for the firestore refs
-const db = getFirestore(firebaseApp)
+const db = ref(getDatabase(firebaseApp))
+get(child(db, `questions`)).then((snapshot) => {
+    if (snapshot.exists()) {
+        console.log(snapshot.val());
+    } else {
+        console.log("No data available");
+    }
+}).catch((error) => {
+    console.error(error);
+});
 export const auth = getAuth(firebaseApp)
 
-// here we can export reusable database references
-export const todosRef = collection(db, 'todos')
+export const questionsRef = useDatabaseList(db)

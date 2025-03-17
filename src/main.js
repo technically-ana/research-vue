@@ -1,7 +1,9 @@
 import { createApp } from 'vue'
 import { VueFire, VueFireAuth } from 'vuefire'
 import App from './App.vue'
-import { router } from './router'
+import router from './router'
+import { VueFireDatabaseOptionsAPI } from 'vuefire'
+
 
 // the file we created above with `database`, `firestore` and other exports
 import { firebaseApp } from './firebase'
@@ -13,6 +15,7 @@ app.use(VueFire, {
     firebaseApp,
     modules: [
         VueFireAuth(),
+        VueFireDatabaseOptionsAPI()
     ],
 })
 app.use(router)

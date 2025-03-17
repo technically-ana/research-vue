@@ -20,7 +20,7 @@
               </p>
 
               <div class="has-text-centered mt-5">
-                <button @click="goBack" class="btn">
+                <button @click="goToLogin" class="btn">
                   <span>Back</span>
                 </button>
               </div>
@@ -32,18 +32,11 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'AboutView',
-  data() {
-    return {
-      creationDate: new Date()
-    }
-  },
-  methods: {
-    goBack() {
-      this.$router.push('/');
-    }
-  }
+<script setup>
+import router from "@/router";
+const creationDate = new Date();
+
+function goToLogin() {
+  router.push({ name: 'login' })
 }
 </script>
