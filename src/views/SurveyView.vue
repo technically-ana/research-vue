@@ -7,6 +7,7 @@
             <h1>User Survey</h1>
             <div style="color:red">Remove that!</div>
             <div style="color:black"> {{ responses }}</div>
+            <div style="color:black"> {{ questions }}</div>
             <form @submit.prevent="submitSurvey">
               <div v-for="question in questions"
                    :key="question"
@@ -67,54 +68,20 @@
 </template>
 
 <script>
+import { questionsRef } from "@/firebase";
+import {useCollection} from "vuefire";
+
 export default {
   name: 'SurveyView',
   data() {
     return {
-      questions: [
-        {
-          id: 'q1',
-          text: 'question 1',
-          type: 'singleChoice',
-          options: ['A', 'B', 'C', 'D']
-        },
-        {
-          id: 'q2',
-          text: 'question 2',
-          type: 'multiChoice',
-          options: ['E', 'F', 'G', 'H', 'I']
-        },
-        {
-          id: 'q4',
-          text: 'question 4',
-          type: 'singleChoice',
-          options: ['J', 'L', 'M', 'K']
-        },
-        {
-          id: 'q3',
-          text: 'question 3',
-          type: 'text'
-        },
-        {
-          id: 'q7',
-          text: 'question 7',
-          type: 'textNumber'
-        },
-        {
-          id: 'q5',
-          text: 'question 5',
-          type: 'multiChoice',
-          options: ['N', 'O', 'Something difficult', 'Something new', 'Is that empty?']
-        },
-        {
-          id: 'q6',
-          text: 'question 6',
-          type: 'text'
-        }
-      ],
+      questions: useCollection(questionsRef),
       responses: {},
 
     }
+  },
+  firestore: {
+    questions: questionsRef,
   },
   methods: {
     submitSurvey() {

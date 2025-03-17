@@ -7,11 +7,9 @@
   </main>
 </template>
 
-<script>
+<script setup>
+import { RouterView } from 'vue-router';
 
-export default {
-  name: "App",
-};
 </script>
 
 <style>
@@ -79,7 +77,6 @@ a:hover, a:focus {
   transition: background-color, color, 0.3s;
 }
 body {
-  font-family: "Cutive Mono";
   font-weight: 400;
   color: #fff;
 }
