@@ -37,6 +37,6 @@ import router from "@/router";
 const creationDate = new Date();
 
 function goToLogin() {
-  router.push({ name: 'login' })
+  router.push({ name: 'home' })
 }
 </script>

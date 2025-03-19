@@ -1,29 +1,18 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
-import LoginView from "@/views/LoginView.vue";
 import AboutView from "@/views/AboutView.vue";
-// import SurveyView from "@/views/SurveyView.vue";
-// import DashboardView from "@/views/DashboardViewOld.vue";
-// import FinishedSurveyView from "@/views/FinishedSurveyView.vue";
+import HomeView from "@/views/HomeView.vue";
+import DashboardView from "@/views/DashboardView.vue";
+import RedirectView from "@/views/RedirectView.vue";
 
 const router = createRouter( {
     history: createWebHistory(""),
     routes: [
-        { path: '/', name: 'login', component: LoginView },
+        { path: '/', name: 'home', component: HomeView },
         { path: '/about', name: 'about', component: AboutView },
+        { path: '/dashboard', name: 'dashboard', component: DashboardView},
+        { path: '/r', name: 'redirect', component: RedirectView},
     ]
 } )
-// const routes = [
-//     { path: '/', component: LoginView },
-//     { path: '/about', component: AboutView },
-//     { path: '/survey', component: SurveyView },
-//     { path: '/dashboard', component: DashboardView },
-//     { path: '/finished', component: FinishedSurveyView },
-// ]
-
-// export const router = createRouter({
-//     history: createMemoryHistory(),
-//     routes,
-// })
 
 export default router;
