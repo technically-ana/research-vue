@@ -1,19 +1,21 @@
 <script setup>
-import {onBeforeUnmount, reactive, ref} from 'vue';
+import {onBeforeUnmount, ref} from 'vue';
 import {auth, db} from "@/firebase";
 import {collection, addDoc, query, where, getDocs} from "firebase/firestore";
 import router from "@/router";
 import {onAuthStateChanged, signOut} from "firebase/auth";
+import {useClipboard} from '@vueuse/core'
 
+const {copy} = useClipboard()
 
 const dbPath = "short_links"
 
 const uid = ref('')
 const longLink = ref('')
 const longLinkTitle = ref('')
-const userLinks = reactive({allLinks: []})
+const userLinks = ref(null)
 
-async function getAllLinksForUser() {
+const getAllLinksForUser = async () => {
   const q = query(collection(db, dbPath), where("owner", "==", uid.value));
   const querySnapshot = await getDocs(q);
   let userLinksList = []
@@ -23,16 +25,14 @@ async function getAllLinksForUser() {
     link['data'] = doc.data()
     userLinksList.push(link)
   });
-  userLinks.allLinks = userLinksList
+  userLinks.value = userLinksList
 }
 
 async function createShortLink() {
   const newLink = await addDoc(collection(db, dbPath), {
     owner: uid.value,
     link_title: longLinkTitle.value,
-    long_url: longLink.value,
-    short_url: longLink.value,
-    clicks: 0,
+    url: longLink.value,
   });
   longLink.value = '';
   console.log(newLink)
@@ -41,6 +41,9 @@ async function createShortLink() {
 
 const listen = onAuthStateChanged(auth, function (user) {
   uid.value = user.uid
+  if (uid.value && !userLinks.value) {
+    getAllLinksForUser()
+  }
   if (!user) {
     router.push('/')
   }
@@ -62,27 +65,41 @@ onBeforeUnmount(async () => {
   <section class="section">
     <div class="container">
       <div class="columns is-centered">
-        <div class="column is-9">
-          <div>
-            <div>
-              <span><button @click="handleSignOut"> Logout </button></span>
-              <p>this is dashboard!</p>
-              <p>You are logged in as user {{ uid }}</p>
-              <div>
-                <div>
-                  <input v-model="longLinkTitle" placeholder="Title"/>
-                </div>
-                <textarea v-model="longLink" placeholder="Paste your link here"></textarea>
-                <button @click="createShortLink" class="btn">Create New Short Link</button>
-              </div>
-              <p>{{ userLinks.allLinks }}</p>
-              <div v-for="l in userLinks.allLinks"
-                   :key="l">
-                <p>{{ l.id }}</p>
-                <p>{{ l.data.link_title }} : {{ l.data.short_url }} : clicked {{ l.data.clicks }} times.</p>
-                <hr>
-              </div>
+        <div id="parent">
+          <div class="right padded-bot">
+            <button class="btn btn-large" @click="handleSignOut"> Logout</button>
+          </div>
+          <p>You are logged in as user {{ uid }}</p>
+          <div class="center">
+            <div class="padded">
+              <input v-model="longLinkTitle" placeholder="Title"/>
             </div>
+            <textarea
+                rows="6"
+                v-model="longLink"
+                placeholder="Paste your link here"></textarea>
+            <div class="padded">
+              <button @click="createShortLink" class="btn">Create Short Link</button>
+            </div>
+          </div>
+          <div v-if="!userLinks" class="padded">
+            <p>Click on the link to copy</p>
+          </div>
+          <p style="color: #e84545">{{ userLinks }}</p>
+          <div v-for="l in userLinks"
+               :key="l">
+            <p>{{ l.id }}</p>
+            <div>
+              <h5 class="">{{ l.data.link_title }}</h5>
+              <span class="">
+                <button
+                    class="btn-link "
+                    @click="copy('env here' + l.id)">
+                  {{ 'env here' + l.id }}
+                </button>
+              </span>
+            </div>
+            <hr>
           </div>
         </div>
       </div>
@@ -91,3 +108,50 @@ onBeforeUnmount(async () => {
 
 
 </template>
+
+<style scoped>
+.btn-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  color: #069;
+  cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+  height: auto;
+}
+
+#parent {
+  text-align: center;
+  height: 400px;
+  width: 600px;
+}
+
+.block {
+  height: 100px;
+  width: 200px;
+  text-align: left;
+}
+
+.center {
+  margin: auto;
+}
+
+.left {
+  margin: auto auto auto 0;
+}
+
+.padded {
+  padding: 24px;
+}
+
+.padded-bot {
+  padding-bottom: 24px;
+}
+
+.right {
+  margin: auto 0 auto auto;
+}
+</style>

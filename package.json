@@ -8,8 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vueuse/core": "^13.0.0",
     "core-js": "^3.8.3",
     "firebase": "^11.4.0",
+    "object-hash": "^3.0.0",
     "vue": "^3.2.13",
     "vue-router": "^4.5.0",
     "vuefire": "^3.2.1"
