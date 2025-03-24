@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVe
 import { ref } from 'vue';
 import router from "@/router";
 
-// const router = useRouter()
 const email = ref('');
 const password = ref('');
 const isLoading = ref(false);
