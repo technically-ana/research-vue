@@ -1,5 +1,5 @@
 <script setup>
-import {onBeforeUnmount, ref} from 'vue';
+import {computed, onBeforeUnmount, ref} from 'vue';
 import {auth, db} from "@/firebase";
 import {collection, addDoc, query, where, getDocs} from "firebase/firestore";
 import router from "@/router";
@@ -27,6 +27,14 @@ const getAllLinksForUser = async () => {
   });
   userLinks.value = userLinksList
 }
+
+const baseUrl = computed(() => {
+  return 'http://' + process.env.VUE_APP_URL +':' + process.env.VUE_APP_PORT + '/r/'
+});
+
+// const createShortLinkString = () => {
+//   return longLink.value + process.env.USERNAME
+// };
 
 async function createShortLink() {
   const newLink = await addDoc(collection(db, dbPath), {
@@ -63,13 +71,12 @@ onBeforeUnmount(async () => {
 <template>
 
   <section class="section">
-    <div class="container">
+    <div>
       <div class="columns is-centered">
         <div id="parent">
           <div class="right padded-bot">
             <button class="btn btn-large" @click="handleSignOut"> Logout</button>
           </div>
-          <p>You are logged in as user {{ uid }}</p>
           <div class="center">
             <div class="padded">
               <input v-model="longLinkTitle" placeholder="Title"/>
@@ -82,20 +89,18 @@ onBeforeUnmount(async () => {
               <button @click="createShortLink" class="btn">Create Short Link</button>
             </div>
           </div>
-          <div v-if="!userLinks" class="padded">
+          <div class="padded">
             <p>Click on the link to copy</p>
           </div>
-          <p style="color: #e84545">{{ userLinks }}</p>
           <div v-for="l in userLinks"
                :key="l">
-            <p>{{ l.id }}</p>
             <div>
               <h5 class="">{{ l.data.link_title }}</h5>
               <span class="">
                 <button
                     class="btn-link "
-                    @click="copy('env here' + l.id)">
-                  {{ 'env here' + l.id }}
+                    @click="copy(baseUrl + l.id)">
+                  {{ baseUrl + l.id }}
                 </button>
               </span>
             </div>

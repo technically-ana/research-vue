@@ -2,7 +2,7 @@
 import LoginView from "@/views/LoginView.vue";
 import { onAuthStateChanged } from "firebase/auth";
 import {auth} from "@/firebase";
-import {onBeforeUnmount, ref} from "vue";
+import { onBeforeUnmount, ref } from "vue";
 
 
 const isLoggedIn = ref(false)
@@ -21,10 +21,5 @@ onBeforeUnmount(async () => {
 </script>
 
 <template>
-  <p>Welcome</p>
     <LoginView v-if="!isLoggedIn" />
 </template>
-
-<style scoped>
-
-</style>

@@ -1,17 +1,12 @@
 <template>
   <section class="section">
-    <div class="container">
+    <div>
       <div class="columns is-centered">
         <div class="column is-6">
           <div>
-            <h1 class="title has-text-centered">About Our App</h1>
+            <h1 class="title has-text-centered">About the App</h1>
 
             <div class="content">
-              <p class="has-text-centered mb-5">
-                <span class="icon is-large">
-                  <i class="fas fa-info-circle fa-2x"></i>
-                </span>
-              </p>
 
               <p>This application is for educational purpose.</p>
 
