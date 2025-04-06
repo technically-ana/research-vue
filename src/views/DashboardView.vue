@@ -29,7 +29,7 @@ const getAllLinksForUser = async () => {
 }
 
 const baseUrl = computed(() => {
-  return 'http://' + process.env.VUE_APP_URL +':' + process.env.VUE_APP_PORT + '/r/'
+  return process.env.VUE_APP_URL + 'r/'
 });
 
 
