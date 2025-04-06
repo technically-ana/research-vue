@@ -14,6 +14,7 @@ const uid = ref('')
 const longLink = ref('')
 const longLinkTitle = ref('')
 const userLinks = ref(null)
+const errorMessage = ref('')
 
 const getAllLinksForUser = async () => {
   const q = query(collection(db, dbPath), where("owner", "==", uid.value));
@@ -26,6 +27,24 @@ const getAllLinksForUser = async () => {
     userLinksList.push(link)
   });
   userLinks.value = userLinksList
+}
+
+function isValidURL(url) {
+  try {
+    const u = new URL(url);
+    return ['https:'].includes(u.protocol);
+  } catch {
+    return false;
+  }
+}
+
+function validateUrl() {
+  const valid = isValidURL(longLink.value)
+
+  if(valid) {
+    errorMessage.value = ''
+  }
+  else errorMessage.value = "The link is incorrect or insecure"
 }
 
 const baseUrl = computed(() => {
@@ -80,12 +99,16 @@ onBeforeUnmount(async () => {
             <textarea
                 rows="6"
                 v-model="longLink"
+                @input="validateUrl"
                 placeholder="Paste your link here"></textarea>
             <div class="padded">
-              <button @click="createShortLink" class="btn">Create Short Link</button>
+              <button @click="createShortLink" :disabled="errorMessage !== ''" class="btn">Create Short Link</button>
             </div>
           </div>
-          <div class="padded">
+          <div v-if="errorMessage !== ''" class="padded" >
+            <p style="color: #e84545">{{ errorMessage }}</p>
+          </div>
+          <div v-else class="padded">
             <p>Click on the link to copy</p>
           </div>
           <div v-for="l in userLinks"
