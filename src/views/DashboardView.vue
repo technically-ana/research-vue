@@ -32,28 +32,24 @@ const baseUrl = computed(() => {
   return 'http://' + process.env.VUE_APP_URL +':' + process.env.VUE_APP_PORT + '/r/'
 });
 
-// const createShortLinkString = () => {
-//   return longLink.value + process.env.USERNAME
-// };
 
 async function createShortLink() {
-  const newLink = await addDoc(collection(db, dbPath), {
+  await addDoc(collection(db, dbPath), {
     owner: uid.value,
     link_title: longLinkTitle.value,
     url: longLink.value,
   });
   longLink.value = '';
-  console.log(newLink)
   await getAllLinksForUser()
 }
 
 const listen = onAuthStateChanged(auth, function (user) {
-  uid.value = user.uid
-  if (uid.value && !userLinks.value) {
-    getAllLinksForUser()
-  }
   if (!user) {
     router.push('/')
+  }
+  if (user && !userLinks.value) {
+    uid.value = user.uid
+    getAllLinksForUser()
   }
 });
 
