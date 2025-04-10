@@ -90,7 +90,7 @@ onBeforeUnmount(async () => {
       <div class="columns is-centered">
         <div id="parent">
           <div class="right padded-bot">
-            <button class="btn btn-large" @click="handleSignOut"> Logout</button>
+            <button class="btn btn-large" @click="handleSignOut"> Log out</button>
           </div>
           <div class="center">
             <div class="padded">
