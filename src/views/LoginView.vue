@@ -48,20 +48,24 @@ function sendEmailAndGoToDashboard(userCredentials) {
 <template>
   <section class="section">
     <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-4">
+      <div class="parent">
+        <div class="center">
           <div>
-            <h1 class="title has-text-centered">Login</h1>
-
-            <div v-if="newUser">
+            <div class="center">
+              <h1 class="title">Login</h1>
+            </div>
+            <div
+                class="padded-bot"
+                v-if="newUser">
               <a href="#" @click="newUser = false">Returning User?</a>
             </div>
-
-            <div v-else>
+            <div
+                class="padded-bot"
+                v-else>
               <a href="#" @click="newUser = true">New user?</a>
             </div>
             <form @submit.prevent="handleLogin">
-              <div class="field">
+              <div class="field padded-bot">
                 <label class="label">Email</label>
                 <div class="control">
                   <input
@@ -70,11 +74,12 @@ function sendEmailAndGoToDashboard(userCredentials) {
                       type="email"
                       placeholder="youremail@example.com"
                       required
+                      size="42"
                   >
                 </div>
               </div>
 
-              <div class="field">
+              <div class="field padded-bot">
                 <label class="label">Password</label>
                 <div class="control">
                   <input
@@ -83,12 +88,13 @@ function sendEmailAndGoToDashboard(userCredentials) {
                       type="password"
                       placeholder="********"
                       required
+                      size="42"
                   >
                 </div>
               </div>
 
               <div class="field">
-                <div class="control has-text-centered mt-5 btn-container">
+                <div class="center btn-container">
                   <button
                       class="btn btn-large"
                       :class="{'is-loading': isLoading}"
@@ -104,11 +110,11 @@ function sendEmailAndGoToDashboard(userCredentials) {
               </div>
             </form>
 
-            <div class="has-text-centered mt-5 btn-container">
+            <div class="center btn-container padded">
               <button @click="goToAbout" class="btn">About</button>
             </div>
 
-            <div class="has-text-centered mt-5" v-if="isLoading === true">
+            <div class="center" v-if="isLoading === true">
               <div>
                 <p>
                   Loading ...

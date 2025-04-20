@@ -1,17 +1,15 @@
 <template>
   <section class="section">
-    <div>
-      <div class="columns is-centered">
+    <div class="parent">
+      <div class="center">
         <div class="column is-6">
           <div>
-            <h1 class="title has-text-centered">Application SecuReVue</h1>
-
+            <h1 class="center">Application SecuReVue</h1>
             <div class="content">
-
-              <p>This application was created on 7th of April, 2025. For educational purpose.</p>
-
-
-              <div class="has-text-centered mt-5">
+              <div class="center">
+                <p>This application was created on 7th of April, 2025. For educational purpose.</p>
+              </div>
+              <div class="center">
                 <button @click="goToLogin" class="btn">
                   <span>Back</span>
                 </button>

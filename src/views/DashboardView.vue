@@ -87,13 +87,13 @@ onBeforeUnmount(async () => {
 
   <section class="section">
     <div>
-      <div class="columns is-centered">
+      <div class="columns center">
         <div id="parent">
-          <div class="right padded-bot">
+          <div class="center padded-bot">
             <button class="btn btn-large" @click="handleSignOut"> Log out</button>
           </div>
-          <div class="center">
-            <div class="padded">
+          <div >
+            <div class="center padded">
               <input v-model="longLinkTitle" placeholder="Title"/>
             </div>
             <textarea
