@@ -1,8 +1,9 @@
 <script setup>
 import LoginView from "@/views/LoginView.vue";
-import { onAuthStateChanged } from "firebase/auth";
+import {onAuthStateChanged, signOut} from "firebase/auth";
 import {auth} from "@/firebase";
 import { onBeforeUnmount, ref } from "vue";
+import router from "@/router";
 
 
 const isLoggedIn = ref(false)
@@ -14,6 +15,11 @@ function updateValues(firebaseUser) {
   isLoggedIn.value = !!firebaseUser;
 }
 
+const handleSignOut = () => {
+  signOut(auth)
+  router.push('/')
+}
+
 onBeforeUnmount(async () => {
   listen()
 });
@@ -22,4 +28,7 @@ onBeforeUnmount(async () => {
 
 <template>
     <LoginView v-if="!isLoggedIn" />
+    <div v-else>
+      <button class="btn btn-large padded" @click="handleSignOut">To login</button>
+    </div>
 </template>

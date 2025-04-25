@@ -147,35 +147,4 @@ textarea {
   height: auto;
 }
 
-#parent {
-  text-align: center;
-  height: 400px;
-  width: 600px;
-}
-
-.block {
-  height: 100px;
-  width: 200px;
-  text-align: left;
-}
-
-.center {
-  margin: auto;
-}
-
-.left {
-  margin: auto auto auto 0;
-}
-
-.padded {
-  padding: 24px;
-}
-
-.padded-bot {
-  padding-bottom: 24px;
-}
-
-.right {
-  margin: auto 0 auto auto;
-}
 </style>

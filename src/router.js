@@ -6,7 +6,7 @@ import DashboardView from "@/views/DashboardView.vue";
 import RedirectView from "@/views/RedirectView.vue";
 
 const router = createRouter( {
-    history: createWebHistory(""),
+    history: createWebHistory(),
     routes: [
         { path: '/', name: 'home', component: HomeView },
         { path: '/about', name: 'about', component: AboutView },
