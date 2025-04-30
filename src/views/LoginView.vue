@@ -35,7 +35,8 @@ function goToAbout() {
 }
 
 function goToDashboard(uidString) {
-  router.push({ name: "dashboard", params: { uid: uidString} })
+  // router.push({ name: "dashboard", params: { uid: uidString} })
+  router.push(`/dashboard/${uidString}`)
 }
 
 function sendEmailAndGoToDashboard(userCredentials) {

@@ -1,10 +1,14 @@
 <script setup>
-import {computed, onBeforeUnmount, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import {auth, db} from "@/firebase";
 import {collection, addDoc, query, where, getDocs} from "firebase/firestore";
 import router from "@/router";
-import {onAuthStateChanged, signOut} from "firebase/auth";
+import {signOut} from "firebase/auth";
 import {useClipboard} from '@vueuse/core'
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+const id = route.params.id
 
 const {copy} = useClipboard()
 
@@ -62,23 +66,19 @@ async function createShortLink() {
   await getAllLinksForUser()
 }
 
-const listen = onAuthStateChanged(auth, function (user) {
-  if (!user) {
-    router.push('/')
-  }
-  if (user && !userLinks.value) {
-    uid.value = user.uid
-    getAllLinksForUser()
-  }
-});
-
 const handleSignOut = () => {
   signOut(auth)
   router.push('/')
 }
 
-onBeforeUnmount(async () => {
-  listen()
+onMounted(async () => {
+  const currentUser = auth.currentUser;
+  if (!currentUser || currentUser.uid !== id) {
+    await router.push('/')
+  }
+  if (currentUser && !userLinks.value) {
+    await getAllLinksForUser();
+  }
 });
 
 </script>
