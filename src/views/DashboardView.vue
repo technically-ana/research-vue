@@ -76,8 +76,11 @@ onMounted(async () => {
   if (!currentUser || currentUser.uid !== id) {
     await router.push('/')
   }
-  if (currentUser && !userLinks.value) {
-    await getAllLinksForUser();
+  if (currentUser) {
+    uid.value = currentUser.uid
+    if (!userLinks.value) {
+      await getAllLinksForUser();
+    }
   }
 });
 
